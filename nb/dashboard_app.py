@@ -4,9 +4,7 @@ import pandas as pd
 import streamlit as st
 
 
-# ==============================
-# 1. Carga de datos (con caché)
-# ==============================
+# 1. Carga de datos
 @st.cache_data
 def load_data():
     """
@@ -57,9 +55,7 @@ def load_data():
     return df, chosen_path
 
 
-# ==============================
 # 2. Layout principal
-# ==============================
 def main():
     st.set_page_config(
         page_title="Dashboard de Precios de Alimentos (SIPSA-P)",
@@ -79,7 +75,7 @@ def main():
         """
     )
 
-    # ---- Cargar datos ----
+    # Cargar datos
     df, path = load_data()
 
     if df is None or df.empty:
@@ -151,9 +147,7 @@ def main():
         )
         st.stop()
 
-    # ==============================
     # 3. KPIs principales
-    # ==============================
     st.subheader(f"📌 Indicadores para **{producto_sel}**")
 
     df_producto_sorted = df_producto.sort_values("fecha")
@@ -201,14 +195,12 @@ def main():
     else:
         col3.metric("Variación %", "N/A")
 
-    # ==============================
     # 4. Gráficos principales
-    # ==============================
     tab1, tab2 = st.tabs(
         ["📈 Serie de tiempo por mercado", "🏆 Mercados más caros / baratos"]
     )
 
-    # --- Tab 1: Serie de tiempo ---
+    # Tab 1: Serie de tiempo
     with tab1:
         st.markdown(
             f"### Evolución del precio de **{producto_sel}** por mercado "
@@ -237,7 +229,7 @@ def main():
             "Sirve para ver qué mercados son sistemáticamente más caros o más baratos."
         )
 
-    # --- Tab 2: ranking de mercados ---
+    # Tab 2: ranking de mercados
     with tab2:
         st.markdown(
             f"### Mercados más caros y más baratos para **{producto_sel}** "
@@ -279,9 +271,7 @@ def main():
             "y dónde es relativamente más barato."
         )
 
-    # ==============================
     # 5. Vista rápida general (opcional)
-    # ==============================
     st.markdown("---")
     st.subheader("🔎 Tabla filtrada (para inspección rápida)")
 
